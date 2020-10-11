@@ -7,7 +7,7 @@
     if($noTracking != null){
         $jumlahData = ""; 
 
-        $query = "SELECT count(no_cn) as jumlahData FROM penerima_npd where no_cn = $no_tracking;";
+        $query = "SELECT count(no_cn) as jumlahData FROM data_barang_faktur where no_cn = $no_tracking;";
         $result = mysqli_query($conn,$query);
         while ($row=mysqli_fetch_array($result)){
         $jumlahData = $row["jumlahData"]; 
@@ -34,7 +34,7 @@
 
         }
     
-        $query="DELETE FROM penerima_npd where no_cn = $noTracking;";
+        $query="DELETE FROM data_barang_faktur where no_cn = $noTracking;";
         $delete=mysqli_query($conn,$query);
         if($delete){
             echo "<script>alert('Data Berhasil Dihapus')

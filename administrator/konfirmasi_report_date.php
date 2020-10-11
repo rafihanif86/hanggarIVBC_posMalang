@@ -35,10 +35,12 @@
         $judul = "Seluruh Data ";
     }
 
-    if(isset($_POST["btnTracking"]) && $_POST["tgl_awal"] !="" && $_POST["tgl_akhir"] != ""){
-        $tgl_awal=$_POST["tgl_awal"];
-        $tgl_akhir=$_POST["tgl_akhir"];
+    if(isset($_GET["tgl_awal"]) && isset($_GET["tgl_akhir"])){
+        $tgl_awal=$_GET["tgl_awal"];
+        $tgl_akhir=$_GET["tgl_akhir"];
+    }
 
+    if($tgl_awal != "" && $tgl_akhir != ""){
         if( $tgl_akhir < $tgl_awal){
             $hidden_alert = "";
         }else if($id_petugas != ""){
@@ -49,7 +51,6 @@
             $query="SELECT * FROM penerima_npd where tgl_input between '$tgl_awal' and '$tgl_akhir' order by tgl_input asc, nama_penerima desc;";
             $result=mysqli_query($conn,$query) ;
         }
-        
     }else{
         if($id_petugas != ""){
             $query="SELECT * FROM penerima_npd where petugas_pemeriksa = '$id_petugas' and  proses like '%telah_diproses%' order by tgl_input asc, nama_penerima desc;";
@@ -94,62 +95,6 @@
     </section>
 
     <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <!-- left column -->
-                <div class="col-md-12">
-                    <!-- general form elements -->
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">Pilih Rentang Waktu Untuk Di buat Laporan</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
-                        <form action="konfirmasi_report_date.php?status=<?php echo $status1;?>" method="post" merk="frm" enctype="multipart/form-data"
-                            class="form-horizontal">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Tanggal Awal</label>
-                                            <input type="date" class="form-control" name="tgl_awal" placeholder="Pilih tanggal awal" 
-                                                value="<?php echo $tgl_akhir; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Tanggal Akhir</label>
-                                            <input type="date" class="form-control" name="tgl_akhir" placeholder="Pilih tanggal akhir"
-                                                value="<?php echo $tgl_akhir; ?>">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
-
-                            <div class="card-footer" style="text-align: right;">
-                                <button type="submit" class="btn btn-primary" name="btnTracking">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- /.card -->
-                </div>
-                <!--/.col (right) -->
-            </div>
-            <!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </section>
-
-    <section class="content" <?php echo $hidden_alert; ?>>
-        <div class="container-fluid">
-            <div class="alert alert-warning" role="alert">
-                Anda Memasukkan Rentang Waktu Yang Salah
-            </div>
-        </div>
-    </section>
-
-    <!-- Main content -->
     <section class="content" <?php if ($hidden_alert == ""){echo "hidden";} ?>>
         <div class="container-fluid">
             <div class="row">
@@ -189,7 +134,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
-                                    <table class="table table-striped table-bordered" style="zoom: 90%;">
+                                        <table class="table table-striped table-bordered" style="zoom: 90%;">
                                             <thead>
                                                 <tr>
                                                     <th>#</th>

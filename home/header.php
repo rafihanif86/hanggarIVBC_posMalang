@@ -1,5 +1,7 @@
 <?php
     include('connection.php');
+    session_start();
+    $_SESSION['redirect_to'] = "";
 ?>
 <!doctype html>
 <html class="no-js" lang="zxx">

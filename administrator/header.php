@@ -176,59 +176,29 @@
                             </ul>
                         </li>
                         <li class="nav-item has-treeview ">
-                            <a href="#" class="nav-link <?php if($nav_active == 'barang'){echo'active';}?>">
-                                <i class="nav-icon fas fa-box-open "></i>
+                            <a href="#" class="nav-link <?php if($nav_active == 'penerima'){echo'active';}?>">
+                                <i class="nav-icon fas fa-user "></i>
                                 <p>
-                                    Barang NPD 
+                                    Penerima
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                               <li class="nav-item">
-                                  <a href="barang_table.php?status=telah_diproses" class="nav-link <?php if($nav_active == 'barang' && $act == 'telah_diproses'){echo'active';}?>">
+                                  <a href="penerima_table.php" class="nav-link <?php if($nav_active == 'penerima' && $act == 'telah_diproses'){echo'active';}?>">
                                       <i class="far fa-circle nav-icon"></i>
-                                      <p>Telah Diproses</p>
+                                      <p>Data Penerima</p>
                                   </a>
                               </li>
                               <li class="nav-item">
-                                  <a href="barang_table.php?status=belum_diproses" class="nav-link <?php if($nav_active == 'barang' && $act == 'belum_diproses'){echo'active';}?>">
-                                      <i class="far fa-circle nav-icon"></i>
-                                      <p>Belum Diproses</p>
-                                  </a>
-                              </li>
-                              <li class="nav-item">
-                                  <a href="barang_table.php?status=telah_konfirmasi" class="nav-link <?php if($nav_active == 'barang' && $act == 'telah_konfirmasi'){echo'active';}?>">
-                                      <i class="far fa-circle nav-icon"></i>
-                                      <p>Telah Konfirmasi</p>
-                                  </a>
-                              </li>
-                              <li class="nav-item">
-                                  <a href="barang_table.php?status=belum_konfirmasi" class="nav-link <?php if($nav_active == 'barang' && $act == 'belum_konfirmasi'){echo'active';}?>">
-                                      <i class="far fa-circle nav-icon"></i>
-                                      <p>Belum Konfirmasi</p>
-                                  </a>
-                              </li>
-                              <li class="nav-item">
-                                  <a href="barang_table.php" class="nav-link <?php if($nav_active == 'barang' && $act == ''){echo'active';}?>">
-                                      <i class="far fa-circle nav-icon"></i>
-                                      <p>Seluruh Data Barang</p>
-                                  </a>
-                              </li>
-                              <li class="nav-item">
-                                  <a href="barang_form.php" class="nav-link <?php if($nav_active == 'barang' && $act == 'form'){echo'active';}?>">
+                                  <a href="barang_form.php" class="nav-link <?php if($nav_active == 'penerima' && $act == 'form'){echo'active';}?>">
                                       <i class="far fa-circle nav-icon"></i>
                                       <p>Kelola Data / Data Baru</p>
                                   </a>
                               </li>
                             </ul>
                         </li>
-                        <li class="nav-item has-treeview" 
-                            <?php 
-                                if($_SESSION['status'] == "checker"){
-                                    echo "hidden";
-                                }
-                            ?>
-                        >
+                        <li class="nav-item has-treeview" <?php if($_SESSION['status'] == "checker"){ echo "hidden"; } ?> >
                             <a href="#" class="nav-link <?php if($nav_active == 'akun'){echo'active';}?>">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>

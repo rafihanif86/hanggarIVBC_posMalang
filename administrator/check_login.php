@@ -7,7 +7,7 @@ include 'connection.php';
  
 // menangkap data yang dikirim dari form
 $email = $_POST['email'];
-$password = $_POST['password'];
+$password = md5($_POST['password']);
 $status ="";
 $login_status = "";
 
@@ -23,8 +23,12 @@ if($status != "" && $login_status != ""){
     $result2=mysqli_query($conn,$query2);
     $_SESSION['email'] = $email;
     $_SESSION['status'] = $status;
-    $_SESSION['last_login_timestamp'] = time();  
-    header("location:Dashboard_admin.php");
+    $_SESSION['last_login_timestamp'] = time();
+    if($_SESSION['redirect_to'] == "" || $_SESSION['redirect_to'] == null){
+        $_SESSION['redirect_to'] = "dashboard_admin.php";
+    }
+    header("location:".$_SESSION['redirect_to']);
+    // header("location: dashboard_admin.php");
 }else{
 	header("location:login_page.php?pesan=gagal");
 }

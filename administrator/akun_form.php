@@ -111,8 +111,8 @@
         $jabatan=$_POST["jabatan"];
         $tgl_register=$_POST["tgl_register"];
         $editStatus = $_POST["editStatus"];
-        $password1 = $_POST["password1"];
-        $password2 = $_POST["password2"];
+        $password1 = md5($_POST["password1"]);
+        $password2 = md5($_POST["password2"]);
         $final_password = "";
 
         $sql_insert1 = null;
@@ -331,12 +331,12 @@
                                         <div class="form-group" <?php echo $hidden_input_button; ?>>
                                             <label for="exampleInputPassword1"><?php echo $password_title1; ?></label>
                                             <input type="password" name="password1" class="form-control"
-                                                placeholder="Nama Pengirim" value="" <?php echo $disabeled_data; ?>>
+                                                placeholder="Password" value="" <?php echo $disabeled_data; ?>>
                                         </div>
                                         <div class="form-group" <?php echo $hidden_input_button; ?>>
-                                            <label for="exampleInputPassword1"><?php echo $password_title1; ?></label>
+                                            <label for="exampleInputPassword1"><?php echo $password_title2; ?></label>
                                             <input type="password" name="password2" class="form-control"
-                                                placeholder="Nama Pengirim" value="" <?php echo $disabeled_data; ?>>
+                                                placeholder="Password" value="" <?php echo $disabeled_data; ?>>
                                         </div>
                                     </div>
                                     <div class="col-5">
