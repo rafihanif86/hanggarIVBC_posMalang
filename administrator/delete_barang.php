@@ -7,14 +7,14 @@
     if($noTracking != null){
         $jumlahData = ""; 
 
-        $query = "SELECT count(no_cn) as jumlahData FROM data_barang_npd where no_cn = $no_tracking;";
+        $query = "select count(no_cn) as jumlahData from data_barang_npd where no_cn = $no_tracking;";
         $result = mysqli_query($conn,$query);
         while ($row=mysqli_fetch_array($result)){
         $jumlahData = $row["jumlahData"]; 
         }
 
         if($jumlahData > 0){
-            $query = "SELECT * FROM konfirmasi_foto_barang where no_cn = $noTracking;";
+            $query = "select * from konfirmasi_foto_barang where no_cn = $noTracking;";
             $result = mysqli_query($conn,$query);
             while ($row=mysqli_fetch_array($result)){
                 $nama_file="";
@@ -25,7 +25,7 @@
                 }
             }
 
-            $query="DELETE FROM konfirmasi_foto_barang where no_cn = $noTracking;";
+            $query="delete from konfirmasi_foto_barang where no_cn = $noTracking;";
             $delete=mysqli_query($conn,$query);
             if(!$delete){
                 echo "<script>alert('Data lampiran Gagal Dihapus')
@@ -34,7 +34,7 @@
 
         }
     
-        $query="DELETE FROM data_barang_npd where no_cn = $noTracking;";
+        $query="delete from data_barang_npd where no_cn = $noTracking;";
         $delete=mysqli_query($conn,$query);
         if($delete){
             echo "<script>alert('Data Berhasil Dihapus')

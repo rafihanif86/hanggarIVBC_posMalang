@@ -44,18 +44,18 @@
         if( $tgl_akhir < $tgl_awal){
             $hidden_alert = "";
         }else if($id_petugas != ""){
-            $query="SELECT * FROM penerima_npd where tgl_input between '$tgl_awal' and '$tgl_akhir' 
-                and petugas_pemeriksa = '$id_petugas' and proses like '%telah_diproses%' order by tgl_input asc, nama_penerima desc;";
+            $query="select d.*, p.nama, p.`no_hp`, p.`email`, p.`no_npwp`, p.`input_date` from data_barang_faktur d, penerima p where d.nik = p.nik and d.tgl_input between '$tgl_awal' and '$tgl_akhir' 
+                and d.petugas_pemeriksa = '$id_petugas' and d.proses like '%telah_diproses%' order by tgl_input asc, p.nama desc;";
             $result=mysqli_query($conn,$query) ;
         }else{
-            $query="SELECT * FROM penerima_npd where tgl_input between '$tgl_awal' and '$tgl_akhir' order by tgl_input asc, nama_penerima desc;";
+            $query="select d.*, p.nama, p.`no_hp`, p.`email`, p.`no_npwp`, p.`input_date` from data_barang_faktur d, penerima p where d.nik = p.nik and d.tgl_input between '$tgl_awal' and '$tgl_akhir' order by d.tgl_input asc, p.nama desc;";
             $result=mysqli_query($conn,$query) ;
         }
     }else{
         if($id_petugas != ""){
-            $query="SELECT * FROM penerima_npd where petugas_pemeriksa = '$id_petugas' and  proses like '%telah_diproses%' order by tgl_input asc, nama_penerima desc;";
+            $query="select d.*, p.nama, p.`no_hp`, p.`email`, p.`no_npwp`, p.`input_date` from data_barang_faktur d, penerima p where d.nik = p.nik and d.petugas_pemeriksa = '$id_petugas' and  d.proses like '%telah_diproses%' order by d.tgl_input asc, p.nama desc;";
         }else{
-            $query="SELECT * FROM penerima_npd order by tgl_input asc, nama_penerima desc;";
+            $query="select d.*, p.nama, p.`no_hp`, p.`email`, p.`no_npwp`, p.`input_date` from data_barang_faktur d, penerima p where d.nik = p.nik order by d.tgl_input asc, p.nama desc;";
         }
         $result=mysqli_query($conn,$query) ;
     }
@@ -108,9 +108,9 @@
                     <td><?php echo $i; ?></td>
                     <td><?php echo $row2["tgl_input"]; ?></td>
                     <td><?php echo $row2["no_cn"]; ?></td>
-                    <td><?php echo $row2["nama_penerima"]; ?></td>
+                    <td><?php echo $row2["nama"]; ?></td>
                     <td><?php echo $row2["no_hp"]; ?></td>
-                    <td><?php echo $row2["npwp"]; ?></td>
+                    <td><?php echo $row2["no_npwp"]; ?></td>
                     <td><?php echo $row2["keterangan"]; ?></td>
                     <td><?php echo $row2["total_invoice"]; ?></td>
                     <td><?php 

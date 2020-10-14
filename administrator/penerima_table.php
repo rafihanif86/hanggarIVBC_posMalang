@@ -21,7 +21,7 @@
     }
   }
 
-  $que = "SELECT * FROM penerima order by input_date desc, nama asc;";
+  $que = "select * from penerima order by input_date desc, nama asc;";
   include('header.php');
   $result1 = mysqli_query($conn,$que);
 ?>
@@ -87,13 +87,13 @@
                     <tr>
                      <td><?php echo $n; ?></td>
                      <td><img src="images/<?php if($row1['foto_ktp'] != ""){echo $row1['foto_ktp'];}else{echo 'guest.png';} ?>" alt="foto profil <?php echo $row1["foto_ktp"]; ?>" class="mr-2" style="max-height: 80px"></td>
-                      <td><a  href="penerima_detail.php?nik=<?php echo $row1["nik"];?>" class="text-dark" role="button" aria-pressed="true" > 
+                      <td><a  href="penerima_detail.php?q=<?php echo base64_encode($row1["nik"]);?>" class="text-dark" role="button" aria-pressed="true" > 
                             <?php echo $row1["nama"]; ?> </a></td>
                       <td><?php echo $row1["nik"]; ?></td>
                       <td><?php echo $row1["no_hp"]; ?></td>
                       <td><?php echo $row1["input_date"]; ?></td>
                       <td>
-                          <a  href="penerima_detail.php?nik=<?php echo $row1["nik"];?>" class="btn btn-primary btn-sm" role="button" aria-pressed="true" > 
+                          <a  href="penerima_detail.php?q=<?php echo base64_encode($row1["nik"]);?>" class="btn btn-primary btn-sm" role="button" aria-pressed="true" > 
                             <i class='fas fa-book-open fa-1x'> </i> 
                           </a>
                           <a  href="delete_penerima.php?nik=<?php echo $row1["nik"];?>" class="btn btn-primary btn-sm" role="button" aria-pressed="true"> 

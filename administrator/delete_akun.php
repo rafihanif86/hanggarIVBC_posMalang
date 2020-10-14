@@ -7,7 +7,7 @@
         $jumlahData = ""; 
         $foto_profil = "";
 
-        $query = "SELECT count(id) as jumlahData, foto_profil FROM akun_admin where id = $nip;";
+        $query = "select count(id) as jumlahData, foto_profil from akun_admin where id = $nip;";
         $result = mysqli_query($conn,$query);
         while ($row=mysqli_fetch_array($result)){
             $jumlahData = $row["jumlahData"]; 
@@ -22,7 +22,7 @@
                 }
             }
 
-            $query="DELETE FROM akun_admin where id = $nip;";
+            $query="delete from akun_admin where id = $nip;";
             $delete=mysqli_query($conn,$query);
             if(!$delete){
                 echo "<script>alert('Data lampiran Gagal Dihapus')

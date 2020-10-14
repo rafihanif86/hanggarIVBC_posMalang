@@ -11,7 +11,7 @@ $password = md5($_POST['password']);
 $status ="";
 $login_status = "";
 
-    $query1 = "SELECT * FROM akun_admin WHERE email = '$email' and password = '$password';";
+    $query1 = "select * from akun_admin where email = '$email' and password = '$password';";
     $result1=mysqli_query($conn,$query1);
     while ($row1=mysqli_fetch_array($result1)){
         $status = $row1["posisi"];
@@ -19,7 +19,7 @@ $login_status = "";
     }
 
 if($status != "" && $login_status != ""){
-    $query2 = "UPDATE akun_admin set login_status = 'login' WHERE email = '$email';";
+    $query2 = "update akun_admin set login_status = 'login' where email = '$email';";
     $result2=mysqli_query($conn,$query2);
     $_SESSION['email'] = $email;
     $_SESSION['status'] = $status;

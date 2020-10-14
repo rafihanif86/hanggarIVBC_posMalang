@@ -78,6 +78,7 @@
             </div>
         </div>
     </footer>
+</body>
 
     <!-- link that opens popup -->
     <!--     
@@ -118,12 +119,16 @@
 
     <script src="js/main.js"></script>
     <script>
-$('#datepicker').datepicker({
-    iconsLibrary: 'fontawesome',
-    icons: {
-        rightIcon: '<span class="fa fa-caret-down"></span>'
-    }
-});
+        $('#datepicker').datepicker({
+            iconsLibrary: 'fontawesome',
+            icons: {
+                rightIcon: '<span class="fa fa-caret-down"></span>'
+            }
+        });
+        
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
     </script>
 
     <!-- bs-custom-file-input -->
@@ -135,6 +140,5 @@ $(document).ready(function() {
     bsCustomFileInput.init();
 });
     </script>
-    </body>
 
     </html>

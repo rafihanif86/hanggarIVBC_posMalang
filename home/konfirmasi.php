@@ -58,7 +58,7 @@
     }
 
     if($no_tracking != ""){
-        $query = "SELECT count(no_cn) as jumlahData FROM data_barang_faktur where no_cn = '$no_tracking';";
+        $query = "select count(no_cn) as jumlahData from data_barang_faktur where no_cn = '$no_tracking';";
         $result = mysqli_query($conn,$query);
         while ($row=mysqli_fetch_array($result)){
         $jumlahData = $row["jumlahData"]; 
@@ -84,7 +84,7 @@
             $disabeled_data2 ="disabled";
             $hidden_selesai = "";
 
-            $query = "SELECT d.*, p.nama, p.no_npwp, p.no_hp, p.email, p.foto_ktp FROM data_barang_faktur d, penerima p where d.no_cn = '$no_tracking' and p.nik = d.nik;";
+            $query = "select d.*, p.nama, p.no_npwp, p.no_hp, p.email, p.foto_ktp from data_barang_faktur d, penerima p where d.no_cn = '$no_tracking' and p.nik = d.nik;";
             $result = mysqli_query($conn,$query);
             while ($row=mysqli_fetch_array($result)){
                 $nama = $row["nama"];
@@ -109,14 +109,14 @@
                 $hidden_proses = "hiddenS";
             }
 
-            $query = "SELECT count(id) as jumlahData FROM konfirmasi_foto_invoice where no_cn = '$no_tracking';";
+            $query = "select count(id) as jumlahData from konfirmasi_foto_invoice where no_cn = '$no_tracking';";
             $result = mysqli_query($conn,$query);
             while ($row=mysqli_fetch_array($result)){
                 $jumlahFoto = $row["jumlahData"]; 
             }
 
             if($jumlahFoto > 0){
-                $query1 = "SELECT * FROM konfirmasi_foto_invoice where no_cn = '$no_tracking';";
+                $query1 = "select * from konfirmasi_foto_invoice where no_cn = '$no_tracking';";
                 $result1 = mysqli_query($conn,$query1);
                 $hiddenButtonFoto = "";
                 $hidenDataFoto="";
@@ -155,7 +155,7 @@
         if(($nama && $nik && $email && $no_hp) != ""){
             $tgl_input = date('yy-m-d H:i:s');
             $statusIn = "belum_diproses";
-            $query="INSERT INTO penerima set nama = '$nama', nik = '$nik',email = '$email', no_npwp = '$npwp', no_hp = '$no_hp';";
+            $query="insert into penerima set nama = '$nama', nik = '$nik',email = '$email', no_npwp = '$npwp', no_hp = '$no_hp';";
             $sql_insert1 = mysqli_query($conn,$query);
 
             if ($_FILES['namaFile_ktp']['name'] != "") { 
@@ -167,7 +167,7 @@
                     if($file_size <= 1048576){
                         if($jenis_gambar=="image/jpeg" || $jenis_gambar=="image/jpg" || $jenis_gambar=="image/gif" || $jenis_gambar=="image/x-png"){
                             move_uploaded_file($tmp_name, "../administrator/images/".$file_name);
-                            $query2="UPDATE penerima set foto_ktp = '$file_name' where nik = '$nik';";
+                            $query2="update penerima set foto_ktp = '$file_name' where nik = '$nik';";
                             $sql_insert2 = mysqli_query($conn,$query2);
                             $foto_ktp = $file_name;
                         }else{
@@ -208,7 +208,7 @@
         
         $jumlahFile = count($_FILES['namaFile']['name']);
         if($jumlahFile > 0){
-            $query="INSERT INTO data_barang_faktur set no_cn = '$no_tracking', nik= '$nik', proses = 'belum_diproses', total_invoice = '$total_invoice', keterangan = '$keterangan';";
+            $query="insert into data_barang_faktur set no_cn = '$no_tracking', nik= '$nik', proses = 'belum_diproses', total_invoice = '$total_invoice', keterangan = '$keterangan';";
             $sql_insert1 = mysqli_query($conn,$query);
         }else{
             echo "<script type='text/javascript'> window.onload = function(){ alert('Anda Harus Melampirkan Foto Invoice Barang Import Anda'); } </script>";
@@ -230,7 +230,7 @@
                 if($size <= $limit && $error <= 0){
                     //kalau pengecekan sudah selesai, langsung proses
                     move_uploaded_file($tmp, '../administrator/images/'.$namafile);
-                    $query="INSERT INTO konfirmasi_foto_invoice set no_cn = '$no_tracking', nama_foto = '$namafile';";
+                    $query="insert into konfirmasi_foto_invoice set no_cn = '$no_tracking', nama_foto = '$namafile';";
                     $sql_insert2 = mysqli_query($conn,$query);
                     if($sql_insert2 == true && $sql_insert3 == true){
                         $sql_insert3 = true;
@@ -253,7 +253,7 @@
             }else{
                 echo "<script type='text/javascript'> window.onload = function(){ alert('Data Berhasil Ditambahkan'); } </script>";
             }
-            $query1 = "SELECT * FROM konfirmasi_foto_invoice where no_cn = '$no_tracking';";
+            $query1 = "select * from konfirmasi_foto_invoice where no_cn = '$no_tracking';";
             $result1 = mysqli_query($conn,$query1);
         }else{
             echo "<script type='text/javascript'> window.onload = function(){ alert('Data Gagal Ditambahkan'); } </script>";
@@ -262,7 +262,7 @@
     }
 
     if($nik != ""){
-        $query = "SELECT * FROM penerima where nik = '$nik';";
+        $query = "select * from penerima where nik = '$nik';";
         $result = mysqli_query($conn,$query);
         while ($row=mysqli_fetch_array($result)){
             $nama = $row["nama"];
@@ -446,6 +446,8 @@
                                             <small class="help-block form-text">Masukkan NPWP Jika Memiliki. Nama
                                                 pemilik NPWP harus sama dengan penerima barang impor</small>
                                         </div>
+                                        <div class="form-group">
+                                            </div>
                                     </div>
                                     <div class="col-sm">
                                         <div class="form-group">
@@ -470,8 +472,10 @@
                             </div>
                             <!-- /.card-body -->
 
-                            <div class="card-footer" style="text-align: right;" <?php echo $hidden_input_button; ?>>
-                                <button type="submit" class="btn btn-primary" name="btnData">Simpan</button>
+                            <div class="card-footer" <?php echo $hidden_input_button; ?>>
+                                <input type="checkbox"  onchange="document.getElementById('btnData').disabled = !this.checked;" /> Saya menyetuji 
+                                <a tabindex="0" class="btn btn-sm btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="Syarat dan Ketentuan" data-content="Mengisikan data dengan sebenar-benarnya dan dapat dipertanggungjawabkan. Jika data yang diisikan tidak sesuai maka, barang impor tidak akan diproses. ">Syarat dan Ketentuan</a>
+                                <button type="submit" id="btnData" class="btn btn-primary" style="float: right;" name="btnData" disabled>Simpan</button>
                             </div>
                         </form>
                     </div><!-- /.card -->
@@ -590,9 +594,11 @@
                                     </div>
                                 </div>
                             </div><!-- /.card-body -->
-                            <div class="card-footer" style="text-align: right;" <?php if($disabeled_data2 == "disabled"){echo "hidden";} ?>>
+                            <div class="card-footer" <?php if($disabeled_data2 == "disabled"){echo "hidden";} ?>>
                                 <input type="hidden" name="nik" value="<?php echo $nik; ?>">
-                                <button type="submit" class="btn btn-primary" name="btnFoto">Simpan</button>
+                                <input type="checkbox"  onchange="document.getElementById('btnFoto').disabled = !this.checked;" /> Saya menyetuji 
+                                <a tabindex="0" class="btn btn-sm btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="Syarat dan Ketentuan" data-content="Mengisikan data dengan sebenar-benarnya dan dapat dipertanggungjawabkan. Jika data yang diisikan tidak sesuai maka, barang impor tidak akan diproses. ">Syarat dan Ketentuan</a>
+                                <button type="submit" id="btnFoto" class="btn btn-primary" style="float: right;"name="btnFoto" disabled>Simpan</button>
                             </div>
                         </form>
                     </div>
@@ -614,18 +620,26 @@
 </div><!-- content-wrapper -->
 
 <script>
-var camera = document.getElementById('camera');
-var frame = document.getElementById('frame');
+    
+    
+    $('.Syarat dan Ketentuan').popover({
+    trigger: 'focus'
+    })
 
-camera.addEventListener('change', function(e) {
-    var file = e.target.files[0];
-    // Do something with the image file.
-    frame.src = URL.createObjectURL(file);
-});
+    var camera = document.getElementById('camera');
+    var frame = document.getElementById('frame');
 
-function reset() {
-    frame.src = "";
-}
+    camera.addEventListener('change', function(e) {
+        var file = e.target.files[0];
+        // Do something with the image file.
+        frame.src = URL.createObjectURL(file);
+    });
+
+    function reset() {
+        frame.src = "";
+    }
+
 </script>
+
 
 <?php include 'footer.php'; ?>

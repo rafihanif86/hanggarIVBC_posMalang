@@ -9,7 +9,7 @@
   $act = "";
   $hidden_status="";
 
-  $query1 = "SELECT * FROM akun_admin ORDER BY nama DESC";
+  $query1 = "select * from akun_admin order by nama desc";
   $result1 = mysqli_query($conn,$query1);
   
 ?>
@@ -67,7 +67,7 @@
                       <td><?php echo $row1["email"]; ?></td>
                       <td><?php echo $row1["jabatan"]; ?></td>
                       <td>
-                          <a  href="akun_form.php?nip=<?php echo $row1["id"];?>" class="btn btn-primary btn-sm" role="button" aria-pressed="true" > 
+                          <a  href="akun_form.php?p=<?php echo base64_encode($row1["id"]);?>" class="btn btn-primary btn-sm" role="button" aria-pressed="true" > 
                             <i class='fas fa-book-open fa-1x'> </i> 
                           </a>
                           <a  href="akun_delete.php?nip=<?php echo $row1["id"];?>&act=<?php echo $act;?>" class="btn btn-primary btn-sm" role="button" aria-pressed="true"> 

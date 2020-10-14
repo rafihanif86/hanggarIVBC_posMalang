@@ -6,7 +6,7 @@
     
     if($id != null){
         $nama_file="";
-        $query = "SELECT * FROM konfirmasi_foto_invoice where id = $id;";
+        $query = "select * FROM konfirmasi_foto_invoice where id = $id;";
         $result = mysqli_query($conn,$query);
         while ($row=mysqli_fetch_array($result)){
             $nama_file = $row["nama_foto"];
@@ -19,7 +19,7 @@
             echo "<script>alert('File Gagal Dihapus')
             location.replace('konfirmasi_form.php?noTracking=$noTracking')</script>";
         }else{
-            $query="DELETE FROM konfirmasi_foto_invoice where id = $id;";
+            $query="delete FROM konfirmasi_foto_invoice where id = $id;";
             $delete=mysqli_query($conn,$query);
             if($delete){
                 echo "<script>alert('Data Berhasil Dihapus')

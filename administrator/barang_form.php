@@ -51,7 +51,7 @@
     }
 
     if($no_tracking != ""){
-        $query = "SELECT count(no_cn) as jumlahData FROM data_barang_npd where no_cn = '$no_tracking';";
+        $query = "select count(no_cn) as jumlahData from data_barang_npd where no_cn = '$no_tracking';";
         $result = mysqli_query($conn,$query);
         while ($row=mysqli_fetch_array($result)){
         $jumlahData = $row["jumlahData"]; 
@@ -75,7 +75,7 @@
             $editStatus="no";
             $hidden_proses = "";
 
-            $query = "SELECT * FROM data_barang_npd where no_cn = '$no_tracking';";
+            $query = "select * from data_barang_npd where no_cn = '$no_tracking';";
             $result = mysqli_query($conn,$query);
             while ($row=mysqli_fetch_array($result)){
                 $nama_penerima = $row["nama_penerima"];
@@ -90,14 +90,14 @@
             }
 
             $jumlahFoto = -1;
-            $query = "SELECT count(no_cn) as jumlahData FROM data_barang_npd where no_cn = '$no_tracking';";
+            $query = "select count(no_cn) as jumlahData from data_barang_npd where no_cn = '$no_tracking';";
             $result = mysqli_query($conn,$query);
             while ($row=mysqli_fetch_array($result)){
                 $jumlahFoto = $row["jumlahData"]; 
             }
 
             if($jumlahFoto > 0){
-                $query1 = "SELECT * FROM konfirmasi_foto_barang where no_cn = '$no_tracking';";
+                $query1 = "select * from konfirmasi_foto_barang where no_cn = '$no_tracking';";
                 $result1 = mysqli_query($conn,$query1);
                 $hiddenButtonFoto = "";
                 $hidenDataFoto="";
@@ -134,13 +134,13 @@
         if($editStatus == "no"){
             $tgl_input = date('yy-m-d H:i:s');
 
-            $query="INSERT INTO data_barang_npd set no_cn = '$no_tracking', nama_penerima = '$nama_penerima', nama_pengirim = '$nama_pengirim', alamat_pengirim = '$alamat_pengirim', alamat_penerima = '$alamat_penerima', no_telp_penerima = '$no_telp_penerima', kategori_barang = '$kategori_barang', keterangan_barang = '$keterangan_barang', 
+            $query="insert into data_barang_npd set no_cn = '$no_tracking', nama_penerima = '$nama_penerima', nama_pengirim = '$nama_pengirim', alamat_pengirim = '$alamat_pengirim', alamat_penerima = '$alamat_penerima', no_telp_penerima = '$no_telp_penerima', kategori_barang = '$kategori_barang', keterangan_barang = '$keterangan_barang', 
             tgl_pengecekan_barang ='$tgl_input', petugas_pemeriksa = '$nip_akun';";
             $sql_insert1 = mysqli_query($conn,$query);
             $note = "Tambahkan";
         }else if($editStatus == "yes"){
             $tgl_input = $_POST["tgl_input"];
-            $query="UPDATE data_barang_npd set data_barang_npd set nama_penerima = '$nama_penerima', nama_pengirim = '$nama_pengirim', alamat_pengirim = '$alamat_pengirim', alamat_penerima = '$alamat_penerima', no_telp_penerima = '$no_telp_penerima', kategori_barang = '$kategori_barang', keterangan_barang = '$keterangan_barang' where no_cn = '$no_tracking';";
+            $query="UPDATE data_barang_npd set nama_penerima = '$nama_penerima', nama_pengirim = '$nama_pengirim', alamat_pengirim = '$alamat_pengirim', alamat_penerima = '$alamat_penerima', no_telp_penerima = '$no_telp_penerima', kategori_barang = '$kategori_barang', keterangan_barang = '$keterangan_barang' where no_cn = '$no_tracking';";
             $sql_insert1 = mysqli_query($conn,$query);
             $note = "Diubah";
         }
@@ -176,7 +176,7 @@
             $tmp_name = $_FILES['namaFile']['tmp_name'];				
             move_uploaded_file($tmp_name, "images/".$file_name);
 
-            $query="INSERT INTO konfirmasi_foto_barang set no_cn = '$no_tracking', nama_foto = '$file_name', keterangan_barang = '$keteranganFoto';";
+            $query="insert into konfirmasi_foto_barang set no_cn = '$no_tracking', nama_foto = '$file_name', keterangan_barang = '$keteranganFoto';";
             $sql_insert1 = mysqli_query($conn,$query);
             if($sql_insert1){
                 $foto_alert="Data berhasil disimpan";
@@ -321,7 +321,7 @@
                                             <label for="exampleInputPassword1">Petugas</label>
                                             <select name="petugas" class="form-control" disabled>
                                                 <?php 
-                                                    $quer4 = "SELECT * FROM akun_admin;";
+                                                    $quer4 = "select * from akun_admin;";
                                                     $resu4=mysqli_query($conn,$quer4);
                                                     while ($row4=mysqli_fetch_array($resul4)){
                                                 ?>
@@ -439,7 +439,7 @@
     
     <?php
         $jumlah_data_konfirmasi = 0;
-        $query2 = "SELECT count(no_cn) as jumlahData FROM penerima_npd where no_cn = '$no_tracking';";
+        $query2 = "select count(no_cn) as jumlahData from penerima_npd where no_cn = '$no_tracking';";
         $result2 = mysqli_query($conn,$query2);
         while ($row=mysqli_fetch_array($result2)){
             $jumlah_data_konfirmasi = $row["jumlahData"]; 

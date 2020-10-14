@@ -20,11 +20,11 @@
     $statusIn="";
     $foto_ktp = "";
 
-    if(isset($_POST["nik"]) || isset($_GET["nik"])){
-        if(isset($_POST["noTracking"])){
+    if(isset($_POST["nik"]) || isset($_GET["q"])){
+        if(isset($_POST["nik"])){
             $nik=$_POST["nik"];
-        }else if(isset($_GET["nik"])){
-            $nik=$_GET["nik"];
+        }else if(isset($_GET["q"])){
+            $nik=base64_decode($_GET["q"]);
         }  
     }
 
@@ -33,7 +33,7 @@
     }
 
     if($nik != ""){
-        $query = "SELECT * FROM penerima where nik = '$nik';";
+        $query = "select * from penerima where nik = '$nik';";
         $result = mysqli_query($conn,$query);
         while ($row=mysqli_fetch_array($result)){
             $nama = $row["nama"];
@@ -55,10 +55,12 @@
             $hidden_input_button = "";
             $hidden_proses_button = "";
         }
+    }else{
+        $hidden_nik = "";
     }
 
     if($nik != ""){
-        $query = "SELECT * FROM penerima where nik = '$nik';";
+        $query = "select * from penerima where nik = '$nik';";
         $result = mysqli_query($conn,$query);
         while ($row=mysqli_fetch_array($result)){
             $nama = $row["nama"];
@@ -91,11 +93,16 @@
         $sql_insert2 = null;
         
         if(($nama && $nik && $email && $no_hp) != ""){
-            $tgl_input = date('yy-m-d H:i:s');
-            $statusIn = "belum_diproses";
-            $query="INSERT INTO penerima set nama = '$nama', nik = '$nik',email = '$email', no_npwp = '$npwp', no_hp = '$no_hp';";
-            $sql_insert1 = mysqli_query($conn,$query);
-
+            
+            if($status_ubah == "true"){
+                $statusIn = "belum_diproses";
+                $query="insert into penerima set nama = '$nama', nik = '$nik',email = '$email', no_npwp = '$npwp', no_hp = '$no_hp';";
+                $sql_insert1 = mysqli_query($conn,$query);
+            }else{
+                $query="update penerima set nama = '$nama', email = '$email', no_npwp = '$npwp', no_hp = '$no_hp' where nik = '$nik';";
+                $sql_insert1 = mysqli_query($conn,$query);
+            }
+            
             if ($_FILES['namaFile_ktp']['name'] != "") { 
                 $file_name = $_FILES['namaFile_ktp']['name'];
                 $tmp_name = $_FILES['namaFile_ktp']['tmp_name'];
@@ -104,8 +111,20 @@
                 if($file_name != ""){
                     if($file_size <= 1048576){
                         if($jenis_gambar=="image/jpeg" || $jenis_gambar=="image/jpg" || $jenis_gambar=="image/gif" || $jenis_gambar=="image/x-png"){
+                            // hapus foto sebelumnnya
+                            $foto_ktp_lama = "";
+                            $query = "select * from penerima where nik = '$nik';";
+                            $result = mysqli_query($conn,$query);
+                            while ($row=mysqli_fetch_array($result)){
+                                $foto_ktp_lama = $row["foto_ktp"];
+                            }
+                            if($foto_ktp_lama !=""){
+                                unlink("../administrator/images/".$foto_ktp_lama);
+                            }
+
+                            // upload foto baru
                             move_uploaded_file($tmp_name, "../administrator/images/".$file_name);
-                            $query2="UPDATE penerima set foto_ktp = '$file_name' where nik = '$nik';";
+                            $query2="update penerima set foto_ktp = '$file_name' where nik = '$nik';";
                             $sql_insert2 = mysqli_query($conn,$query2);
                             $foto_ktp = $file_name;
                         }else{
@@ -139,6 +158,8 @@
 
     if(isset($_POST["btnUpdate"])){
         $status_ubah = "true";
+        $disabeled_data = "";
+        $hidden_input_button = "";
     }
 
 ?>
@@ -150,17 +171,18 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <h1>Form Konfirmasi Barang</h1>
+                    <h1>Data Penerima Barang</h1>
                 </div>
                 <div class="col-md-6">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb float-right">
-                            <li class="breadcrumb-item ">Konfirmasi Barang NPD</li>
+                            <li class="breadcrumb-item ">Penerima Barang</li>
                             <li class="breadcrumb-item active">Form</li>
                         </ol>
                     </nav>
                 </div>
             </div>
+            <br/>
 
             <div class="row" <?php echo $hidden_nik; ?>>
                 <!-- left column -->
@@ -172,7 +194,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="konfirmasi_form.php" method="post" merk="frm" enctype="multipart/form-data"
+                        <form action="penerima_detail.php" method="post" merk="frm" enctype="multipart/form-data"
                             class="form-horizontal">
                             <div class="card-body">
                                 <div class="form-group">
@@ -213,7 +235,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="konfirmasi_form.php" method="post" merk="frm" enctype="multipart/form-data"
+                        <form action="penerima_detail.php" method="post" merk="frm" enctype="multipart/form-data"
                             class="form-horizontal">
                             <div class="card-body">
                                 <div class="row">
@@ -254,7 +276,7 @@
                                                             <?php $noPottong = substr($no_hp,1);?>
                                                             <a href="https://api.whatsapp.com/send?phone=<?php echo "+62" .$noPottong; ?>&text=Halo"
                                                                 target="_blank" class="">
-                                                                <i class="fab fa-whatsapp fa-1x"></i>
+                                                                <i class="fa fa-whatsapp fa-1x"></i>
                                                             </a>
                                                         </span>
                                                     </div>
@@ -300,6 +322,7 @@
                             <!-- /.card-body -->
 
                             <div class="card-footer" style="text-align: right;" <?php echo $hidden_input_button; ?>>
+                                <input type="hidden" name="status_ubah" class="form-control" value="<?php echo $status_ubah; ?>">
                                 <button type="submit" class="btn btn-primary" name="btnData">Simpan</button>
                             </div>
                         </form>
@@ -313,20 +336,97 @@
                 <div class="col-md-12 ">
                     <div class="btn-group ">
                         <button type="button" class="btn btn-secondary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Setting
+                            <i class='fa fa-cog fa-1x'></i> Setting
                         </button>
                         <div class="dropdown-menu dropdown-menu-left">
-                            <button class="dropdown-item" onclick="printContent('div1')">
-                                <i class="fas fa-print fa-1x"></i> Cetak </button>
+                            <a  href="penerima_print.php?q=<?php echo base64_encode($nik);?>" class="dropdown-item" target="_BLANK" role="button" aria-pressed="true"> 
+                                <i class='fa fa-print fa-1x'> </i> Cetak
+                            </a>
                             <div class="dropdown-divider"></div>
-                            <form action="konfirmasi_form.php" method="post" merk="frm" enctype="multipart/form-data"
+                            <form action="penerima_detail.php" method="post" merk="frm" enctype="multipart/form-data"
                                 class="form-horizontal">
                                 <input type="hidden" name="nik" class="form-control" value="<?php echo $nik; ?>">
-                                <button type="submit" class="dropdown-item" name="btnUpdate">Ubah</button>
+                                <button type="submit" class="dropdown-item" name="btnUpdate"> <i class='fa fa-pencil fa-1x'></i> Ubah</button>
                             </form>
+                            <a  href="delete_penerima.php?q=<?php echo base64_encode($row1["nik"]);?>" class="dropdown-item" role="button" aria-pressed="true"> 
+                                <i class='fa fa-trash-o fa-1x'> </i> Hapus
+                            </a>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <hr/>
+            <?php
+                $que = "select d.*, p.nama from data_barang_faktur d, penerima p where d.nik = p.nik and p.`nik` = '$nik' order by d.tgl_input desc, p.nama asc;";
+                $result1 = mysqli_query($conn,$que);
+            ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">List Memproses Konfirmasi Penerima NPD Oleh <?php echo $nama; ?></h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body" style="overflow-x: scroll;">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tanggal Input</th>
+                                        <th>Nomer CN</th>
+                                        <th>Keterangan</th>
+                                        <th>Total Harga Barang</th>
+                                        <th>Diproses oleh</th>
+                                        <th width="50px"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                        $i = 0;
+                                        while ($row1=mysqli_fetch_array($result1)){
+                                            $i++;
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $i; ?></td>
+                                        <td><?php echo $row1["tgl_input"]; ?></td>
+                                        <td><?php echo $row1["no_cn"]; ?></td>
+                                        <td><?php echo $row1["keterangan"]; ?></td>
+                                        <td><?php echo $row1["total_invoice"]; ?></td>
+                                        <td>
+                                            <?php 
+                                                $id_petugas = $row1["petugas_pemeriksa"];
+                                                if($id_petugas != ""){
+                                                    $nama_petugas = "";
+                                                    $que6 = "select * from akun_admin where id = $id_petugas;";
+                                                    $res5=mysqli_query($conn,$que6);
+                                                    while ($row3=mysqli_fetch_array($res5)){
+                                                    $nama_petugas = $row3["nama"];
+                                                    }
+                                                    echo "<i class='fas fa-check fa-1x'> </i>";
+                                                    echo " \t <a  href='akun_form.php?p=".base64_encode($id_petugas)."' class='text-dark' role='button' aria-pressed='true' >".$nama_petugas."</a>";
+                                                }else{
+                                                    echo "<i class='fas fa-spinner fa-1x'> </i>";
+                                                } 
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <a href="konfirmasi_form.php?n=<?php echo base64_encode($row1["no_cn"]);?>"
+                                                class="btn btn-primary btn-sm" role="button" aria-pressed="true">
+                                                <i class='fas fa-book-open fa-1x'> </i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <?php } ?>
+                                    </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
             </div>
 
         </div><!-- /.container-fluid -->

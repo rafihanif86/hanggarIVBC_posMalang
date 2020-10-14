@@ -39,34 +39,34 @@
         if($act == "belum_diproses"){
           $judul = "Belum Diproses";
           $hidden_status="hidden";
-          $quei = "SELECT d.`tgl_pengecekan_barang`, d.`no_cn`, d.`petugas_pemeriksa`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang`, p.`total_invoice`, p.`proses` 
-                       FROM data_barang_npd d, penerima_npd p WHERE d.`no_cn` = p.`no_cn` AND p.`proses` = 'belum_diproses' ".$inject_tanggal."ORDER BY d.`tgl_pengecekan_barang` ASC, d.`no_cn` ASC;";
+          $quei = "select d.`tgl_pengecekan_barang`, d.`no_cn`, d.`petugas_pemeriksa`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang`, p.`total_invoice`, p.`proses` 
+                       from data_barang_npd d, penerima_npd p where d.`no_cn` = p.`no_cn` and p.`proses` = 'belum_diproses' ".$inject_tanggal."order by d.`tgl_pengecekan_barang` asc, d.`no_cn` asc;";
         }else if($act == "telah_diproses"){
           $judul = "Telah Diproses";
           $hidden_status="hidden";
-          $quei = "SELECT d.`tgl_pengecekan_barang`, d.`no_cn`, d.`petugas_pemeriksa`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang`, p.`total_invoice`, p.`proses`
-                       FROM data_barang_npd d, penerima_npd p WHERE d.`no_cn` = p.`no_cn` AND p.`proses` = 'telah_diproses' ".$inject_tanggal."ORDER BY d.`tgl_pengecekan_barang` ASC, d.`no_cn` ASC;";
+          $quei = "select d.`tgl_pengecekan_barang`, d.`no_cn`, d.`petugas_pemeriksa`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang`, p.`total_invoice`, p.`proses`
+                       from data_barang_npd d, penerima_npd p where d.`no_cn` = p.`no_cn` and p.`proses` = 'telah_diproses' ".$inject_tanggal."order by d.`tgl_pengecekan_barang` asc, d.`no_cn` asc;";
         }else if($act == "telah_konfirmasi"){
           $judul = "Telah Konfirmasi";
           $hidden_status="";
-          $quei = "SELECT d.`tgl_pengecekan_barang`, d.`no_cn`, d.`petugas_pemeriksa`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang`, p.`total_invoice`, p.`proses` 
-                    FROM data_barang_npd d, penerima_npd p WHERE d.`no_cn` = p.`no_cn` ".$inject_tanggal."ORDER BY d.`tgl_pengecekan_barang` DESC, d.`no_cn` ASC;";
+          $quei = "select d.`tgl_pengecekan_barang`, d.`no_cn`, d.`petugas_pemeriksa`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang`, p.`total_invoice`, p.`proses` 
+                    from data_barang_npd d, penerima_npd p where d.`no_cn` = p.`no_cn` ".$inject_tanggal."order by d.`tgl_pengecekan_barang` desc, d.`no_cn` asc;";
         }else if($act == "belum_konfirmasi"){
           $judul = "Belum Konfirmasi";
           $hidden_status="hidden";
-          $quei = "SELECT d.`tgl_pengecekan_barang`, d.`no_cn`, d.`petugas_pemeriksa`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang` 
-                    FROM data_barang_npd d LEFT OUTER JOIN penerima_npd p on d.`no_cn` = p.`no_cn` where p.`no_cn` IS NULL ".$inject_tanggal."ORDER BY d.`tgl_pengecekan_barang` DESC, d.`no_cn` ASC;";
+          $quei = "select d.`tgl_pengecekan_barang`, d.`no_cn`, d.`petugas_pemeriksa`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang` 
+                    from data_barang_npd d LEFT OUTER JOIN penerima_npd p on d.`no_cn` = p.`no_cn` where p.`no_cn` IS NULL ".$inject_tanggal."order by d.`tgl_pengecekan_barang` desc, d.`no_cn` asc;";
         }
       }else{
         $hidden_status="";
         if($id_petugas != ""){
-            $quei = "SELECT d.`tgl_pengecekan_barang`, d.`no_cn`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang`, d.`petugas_pemeriksa`, p.`total_invoice`, p.`proses` 
-                        FROM data_barang_npd d LEFT JOIN penerima_npd p ON d.`no_cn` = p.`no_cn` where p.`petugas_pemeriksa` = '$id_petugas' ".$inject_tanggal."ORDER BY d.`tgl_pengecekan_barang` DESC, d.`no_cn` ASC; ";
+            $quei = "select d.`tgl_pengecekan_barang`, d.`no_cn`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang`, d.`petugas_pemeriksa`, p.`total_invoice`, p.`proses` 
+                        from data_barang_npd d left join penerima_npd p on d.`no_cn` = p.`no_cn` where p.`petugas_pemeriksa` = '$id_petugas' ".$inject_tanggal."order by d.`tgl_pengecekan_barang` desc, d.`no_cn` asc; ";
         }else{
             if($inject_tanggal != ""){
                 $inject_tanggal = "where". substr($inject_tanggal, 3);
             }
-            $quei = "SELECT d.`tgl_pengecekan_barang`, d.`no_cn`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang`, d.`petugas_pemeriksa`, p.`total_invoice`, p.`proses` FROM data_barang_npd d LEFT JOIN penerima_npd p ON d.`no_cn` = p.`no_cn` ".$inject_tanggal."ORDER BY d.`tgl_pengecekan_barang` DESC, d.`no_cn` ASC; ";
+            $quei = "select d.`tgl_pengecekan_barang`, d.`no_cn`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang`, d.`petugas_pemeriksa`, p.`total_invoice`, p.`proses` from data_barang_npd d left join penerima_npd p on d.`no_cn` = p.`no_cn` ".$inject_tanggal."order by d.`tgl_pengecekan_barang` desc, d.`no_cn` asc; ";
         }
       }
     

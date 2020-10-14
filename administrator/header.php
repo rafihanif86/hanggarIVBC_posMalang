@@ -106,7 +106,7 @@
                         $nama_akun = "";
                         $nip_akun = "";
                         $foto_profil = "guest.png";
-                        $query1 = "SELECT * FROM akun_admin WHERE email like '%$email%'";
+                        $query1 = "select * from akun_admin WHERE email like '%$email%'";
                         $result1=mysqli_query($conn,$query1);
                         while ($row1=mysqli_fetch_array($result1)){
                             $nama_akun = $row1["nama"];
@@ -122,7 +122,7 @@
                         <img src="images/<?php echo "$foto_profil"; ?>" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="akun_form.php?nip=<?php echo $nip_akun;?>" class="d-block"><?php echo $nama_akun; ?></a>
+                        <a href="akun_form.php?p=<?php echo base64_encode($nip_akun);?>" class="d-block"><?php echo $nama_akun; ?></a>
                     </div>
                 </div>
 
@@ -191,7 +191,7 @@
                                   </a>
                               </li>
                               <li class="nav-item">
-                                  <a href="barang_form.php" class="nav-link <?php if($nav_active == 'penerima' && $act == 'form'){echo'active';}?>">
+                                  <a href="penerima_detail.php" class="nav-link <?php if($nav_active == 'penerima' && $act == 'form'){echo'active';}?>">
                                       <i class="far fa-circle nav-icon"></i>
                                       <p>Kelola Data / Data Baru</p>
                                   </a>

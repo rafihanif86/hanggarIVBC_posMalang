@@ -1,4 +1,3 @@
-
 <?php 
   $nav_active = "konfirmasi";
   include('connection.php');
@@ -41,112 +40,113 @@
   $result1 = mysqli_query($conn,$que);
 ?>
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
         <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1>Data Penerima Barang NPD</h1>
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Data Penerima Barang NPD</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Data Penerima NPD</li>
+                    </ol>
+                </div>
             </div>
-            <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Data Penerima NPD</li>
-              </ol>
-            </div>
-          </div>
         </div><!-- /.container-fluid -->
-      </section>
+    </section>
 
-      <!-- Main content -->
-      <section class="content">
+    <!-- Main content -->
+    <section class="content">
         <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">List Data Konfirmasi Penerima NPD - <?php echo $judul; ?></h3>
-                  <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal"
-                      data-target="#exampleModalCenter" 
-                      <?php 
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">List Data Konfirmasi Penerima NPD - <?php echo $judul; ?></h3>
+                        <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal"
+                            data-target="#exampleModalCenter" <?php 
                         if($_SESSION['status'] == "checker"){
                           if($act == "belum_diproses" || $act == "seluruh"){
                             echo "hidden";
                           }
                         }
-                      ?>
-                  ><i class="fas fa-print fa-1x"></i> Laporan </button>
-                </a>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body" style="overflow-x: scroll;">
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                      <th>Tanggal Input</th>
-                      <th>Nama Penerima</th>
-                      <th>Nomer CN</th>
-                      <th>Keterangan</th>
-                      <th>Total Harga Barang</th>
-                      <th <?php echo $hidden_status; ?>>Diproses oleh</th>
-                      <th width="50px"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php 
-                      while ($row1=mysqli_fetch_array($result1)){
-                    ?>
-                    <tr>
-                      <td><?php echo $row1["tgl_input"]; ?></td>
-                      <td><a  href="konfirmasi_form.php?noTracking=<?php echo $row1["nik"];?>" class="text-dark" role="button" aria-pressed="true" > 
-                            <?php echo $row1["nama"]; ?> </a></td>
-                      <td><?php echo $row1["no_cn"]; ?></td>
-                      <td><?php echo $row1["keterangan"]; ?></td>
-                      <td><?php echo $row1["total_invoice"]; ?></td>
-                      <td <?php echo $hidden_status; ?>>
-                        <?php 
-                          $id_petugas = $row1["petugas_pemeriksa"];
-                          if($id_petugas != ""){
-                            $nama_petugas = "";
-                            $que6 = "SELECT * FROM akun_admin where id = $id_petugas;";
-                            $res5=mysqli_query($conn,$que6);
-                            while ($row3=mysqli_fetch_array($res5)){
-                              $nama_petugas = $row3["nama"];
-                            }
-                            echo "<i class='fas fa-check fa-1x'> </i>";
-                            echo " \t".$nama_petugas;
-                          }else{
-                            echo "<i class='fas fa-spinner fa-1x'> </i>";
-                          } 
-                        ?>
-                      </td>
-                      <td>
-                          <a  href="konfirmasi_form.php?noTracking=<?php echo $row1["no_cn"];?>" class="btn btn-primary btn-sm" role="button" aria-pressed="true" > 
-                            <i class='fas fa-book-open fa-1x'> </i> 
-                          </a>
-                          <a  href="delete_konfirmasi.php?no_cn=<?php echo $row1["no_cn"];?>&act=<?php echo $act;?>" class="btn btn-primary btn-sm" role="button" aria-pressed="true"> 
-                            <i class='fa fa-trash-o fa-1x'> </i> 
-                          </a>
-                      </td>
-                    </tr>
-                    <?php } ?>
-                
-              </tfoot>
-            </table>
-          </div>
-          <!-- /.card-body -->
-          <div class="card-footer" <?php echo $hidden_status; ?>>
-              <i class='fas fa-spinner fa-1x'> </i> Belum diproses | <i class='fas fa-check fa-1x'> </i> Telah diproses
+                      ?>><i class="fas fa-print fa-1x"></i> Laporan </button>
+                        </a>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body" style="overflow-x: scroll;">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Tanggal Input</th>
+                                    <th>Nama Penerima</th>
+                                    <th>Nomer CN</th>
+                                    <th>Keterangan</th>
+                                    <th>Total Harga Barang</th>
+                                    <th <?php echo $hidden_status; ?>>Diproses oleh</th>
+                                    <th width="50px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                  $i = 0;
+                                  while ($row1=mysqli_fetch_array($result1)){
+                                    $i++;
+                                ?>
+                                <tr>
+                                    <td><?php echo $i; ?></td>
+                                    <td><?php echo $row1["tgl_input"]; ?></td>
+                                    <td><a href="konfirmasi_form.php?n=<?php echo base64_encode($row1["nik"]);?>"
+                                            class="text-dark" role="button" aria-pressed="true">
+                                            <?php echo $row1["nama"]; ?> </a></td>
+                                    <td><?php echo $row1["no_cn"]; ?></td>
+                                    <td><?php echo $row1["keterangan"]; ?></td>
+                                    <td><?php echo $row1["total_invoice"]; ?></td>
+                                    <td <?php echo $hidden_status; ?>>
+                                        <?php 
+                                          $id_petugas = $row1["petugas_pemeriksa"];
+                                          if($id_petugas != ""){
+                                            $nama_petugas = "";
+                                            $que6 = "SELECT * FROM akun_admin where id = $id_petugas;";
+                                            $res5=mysqli_query($conn,$que6);
+                                            while ($row3=mysqli_fetch_array($res5)){
+                                              $nama_petugas = $row3["nama"];
+                                            }
+                                            echo "<i class='fas fa-check fa-1x'> </i>";
+                                            echo " \t".$nama_petugas;
+                                          }else{
+                                            echo "<i class='fas fa-spinner fa-1x'> </i>";
+                                          } 
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <a href="konfirmasi_form.php?n=<?php echo base64_encode($row1["no_cn"]);?>"
+                                            class="btn btn-primary btn-sm" role="button" aria-pressed="true">
+                                            <i class='fas fa-book-open fa-1x'> </i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <?php } ?>
+                                </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer" <?php echo $hidden_status; ?>>
+                        <i class='fas fa-spinner fa-1x'> </i> Belum diproses | <i class='fas fa-check fa-1x'> </i> Telah
+                        diproses
+                    </div>
+                </div>
+                <!-- /.card -->
             </div>
+            <!-- /.col -->
         </div>
-        <!-- /.card -->
-      </div>
-      <!-- /.col -->
-    </div>
-    <!-- /.row -->
-  </section>
-  <!-- /.content -->
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 
@@ -195,8 +195,8 @@
                     <input type="hidden" name="action" value="<?php echo $act;?>">
                     <button type="submit" class="btn btn-success" name="cetakxls"><i
                             class='fa fa-file-download fa-1x'></i> Download file.xls</button>
-                    <button type="submit" class="btn btn-primary" name="print"><i
-                            class='fa fa-print fa-1x'></i> Print</button>
+                    <button type="submit" class="btn btn-primary" name="print"><i class='fa fa-print fa-1x'></i>
+                        Print</button>
                 </div>
             </form>
         </div>
@@ -218,5 +218,3 @@ function change_kembali() {
     document.getElementById("tgl_kembali").min = tgl_ambil;
 }
 </script>
-
- 

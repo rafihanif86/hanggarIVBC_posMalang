@@ -7,7 +7,7 @@
   $jumlah_konfirmasi = "";
   $jumlah_barang = "";
   for($i = 1; $i <= 12; $i++){
-    $que16 = "SELECT COUNT(no_cn) AS jumlah FROM data_barang_faktur WHERE MONTH(`tgl_input`) = '$i' and YEAR(`tgl_input`) = '$tahun';";
+    $que16 = "select count(no_cn) as jumlah from data_barang_faktur where month(`tgl_input`) = '$i' and year(`tgl_input`) = '$tahun';";
     $res16=mysqli_query($conn,$que16);
     while ($row2=mysqli_fetch_array($res16)){
       $jumlah ="";
@@ -56,7 +56,7 @@
                             <span class="info-box-text">Total Konfirmasi</span>
                             <span class="info-box-number">
                                 <?php 
-                                  $que1 = "SELECT COUNT(no_cn) AS jumlah_total FROM data_barang_faktur;";
+                                  $que1 = "select count(no_cn) as jumlah_total from data_barang_faktur;";
                                   $res1=mysqli_query($conn,$que1);
                                   while ($row1=mysqli_fetch_array($res1)){
                                       echo $row1["jumlah_total"];
@@ -79,7 +79,7 @@
                             <span class="info-box-text">Konfirmasi Tahun Ini</span>
                             <span class="info-box-number">
                                 <?php
-                                    $que2 = "SELECT COUNT(no_cn) AS jumlah_total FROM data_barang_faktur WHERE YEAR(tgl_input) = '$tahun';";
+                                    $que2 = "select count(no_cn) as jumlah_total from data_barang_faktur where year(tgl_input) = '$tahun';";
                                     $res2=mysqli_query($conn,$que2);
                                     while ($row1=mysqli_fetch_array($res2)){
                                         echo $row1["jumlah_total"];
@@ -105,7 +105,7 @@
                             <span class="info-box-text">Konfirmasi Bulan ini</span>
                             <span class="info-box-number">
                                 <?php
-                                  $que3 = "SELECT COUNT(no_cn) AS jumlah_total FROM data_barang_faktur WHERE YEAR(tgl_input) = '$tahun' AND MONTH(tgl_input) = '$bulan';";
+                                  $que3 = "select count(no_cn) as jumlah_total from data_barang_faktur where year(tgl_input) = '$tahun' and month(tgl_input) = '$bulan';";
                                   $res3=mysqli_query($conn,$que3);
                                   while ($row1=mysqli_fetch_array($res3)){
                                       echo $row1["jumlah_total"];
@@ -128,7 +128,7 @@
                             <span class="info-box-text">Konfirmasi Hari Ini</span>
                             <span class="info-box-number">
                                 <?php
-                                    $que4 = "SELECT COUNT(no_cn) AS jumlah_total FROM data_barang_faktur WHERE DATE(tgl_input) = '$tanggal';";
+                                    $que4 = "select count(no_cn) as jumlah_total from data_barang_faktur where date(tgl_input) = '$tanggal';";
                                     $res4=mysqli_query($conn,$que4);
                                     while ($row1=mysqli_fetch_array($res4)){
                                         echo $row1["jumlah_total"];
@@ -158,7 +158,7 @@
                             <div class="card-tools">
                                 <span class="badge badge-warning">
                                     <?php
-                                        $que9 = "SELECT COUNT(login_status) AS jumlah_login FROM akun_admin WHERE login_status = 'login';";
+                                        $que9 = "select count(login_status) as jumlah_login from akun_admin where login_status = 'login';";
                                         $res9=mysqli_query($conn,$que9);
                                         while ($row1=mysqli_fetch_array($res9)){
                                             echo $row1["jumlah_login"];
@@ -178,7 +178,7 @@
                             <ul class="users-list clearfix">
                                 <?php
                                     $foto_profil = "guest.png";
-                                    $que10 = "SELECT * FROM akun_admin WHERE login_status = 'login';";
+                                    $que10 = "select * from akun_admin where login_status = 'login';";
                                     $res10=mysqli_query($conn,$que10);
                                     while ($row1=mysqli_fetch_array($res10)){
                                     if($row1["foto_profil"] != ""){
@@ -258,21 +258,27 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
+                                            <th style="width: 5px;">No</th>
                                             <th>Nama</th>
                                             <th>Telepon</th>
-                                            <th width="3"></th>
                                             <th width="3"><i class="fas fa-box-open fa-1x"></i></th>
+                                            <th width="3"></th>
+                                            <th width="3"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                          $que13 = "SELECT COUNT(d.no_cn) AS jumlah_transaksi, p.`nama`, d.`nik`, p.`no_hp`  FROM data_barang_faktur d, penerima p WHERE d.nik = p.nik GROUP BY d.nik ORDER BY jumlah_transaksi DESC;";
+                                          $que13 = "select count(d.no_cn) as jumlah_transaksi, p.`nama`, d.`nik`, p.`no_hp`  from data_barang_faktur d, penerima p where d.nik = p.nik group by d.nik order by jumlah_transaksi desc;";
                                           $res13=mysqli_query($conn,$que13);
+                                          $a=0;
                                           while ($row1=mysqli_fetch_array($res13)){
+                                              $a++;
                                         ?>
                                         <tr>
+                                            <td><?php echo $a;?></td>
                                             <td><?php echo $row1["nama"];?></td>
                                             <td><?php echo $row1["no_hp"];?></td>
+                                            <td><?php echo $row1["jumlah_transaksi"];?></td>
                                             <td>
                                                 <?php $noPottong = substr($row1["no_hp"],1);?>
                                                 <a href="https://api.whatsapp.com/send?phone=<?php echo "+62" .$noPottong; ?>&text=Halo"
@@ -280,7 +286,11 @@
                                                     <i class="fab fa-whatsapp fa-1x"></i>
                                                 </a>
                                             </td>
-                                            <td><?php echo $row1["jumlah_transaksi"];?></td>
+                                            <td>
+                                                <a href="penerima_detail.php?q=<?php echo  base64_encode($row1["nik"]); ?>" class="btn btn-primary btn-sm">
+                                                    <i class="fas fa-external-link-alt fa-1x"></i>
+                                                </a>
+                                            </td>
                                         </tr>
                                         <?php } ?>
                                     </tbody>
@@ -315,7 +325,7 @@
                         <div class="card-body p-0">
                             <ul class="products-list product-list-in-card pl-2 pr-2">
                                 <?php
-                                    $que11 = "SELECT d.*, p.`nama` FROM data_barang_faktur d, penerima p WHERE p.`nik` = d.`nik` AND d.proses = 'belum_diproses' ORDER BY tgl_input DESC LIMIT 5;";
+                                    $que11 = "select d.*, p.`nama` from data_barang_faktur d, penerima p where p.`nik` = d.`nik` and d.proses = 'belum_diproses' order by tgl_input desc LIMIT 5;";
                                     $res11=mysqli_query($conn,$que11);
                                     while ($row1=mysqli_fetch_array($res11)){
                                 ?>

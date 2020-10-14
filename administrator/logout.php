@@ -4,7 +4,7 @@
     include 'connection.php';
 
     $email = $_SESSION['email'];
-    $query2 = "UPDATE akun_admin set login_status = 'logout' WHERE email = '$email'";
+    $query2 = "update akun_admin set login_status = 'logout' where email = '$email'";
     $result2=mysqli_query($conn,$query2);
     $redirect_to = $_SESSION['redirect_to'];
     if($result2){

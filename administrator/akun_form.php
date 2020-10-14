@@ -3,11 +3,11 @@
     $act = "form";
     $nip ="";
 
-    if(isset($_POST["nip"]) || isset($_GET["nip"])){
+    if(isset($_POST["nip"]) || isset($_GET["p"])){
         if(isset($_POST["nip"])){
             $nip=$_POST["nip"];
-        }else if(isset($_GET["nip"])){
-            $nip=$_GET["nip"];
+        }else if(isset($_GET["p"])){
+            $nip=base64_decode($_GET["p"]);
         }  
     }
 
@@ -52,7 +52,7 @@
     
 
     if($nip != ""){
-        $query = "SELECT count(id) as jumlahData FROM akun_admin where id like '%$nip%';";
+        $query = "select count(id) as jumlahData from akun_admin where id like '%$nip%';";
         $result = mysqli_query($conn,$query);
         while ($row=mysqli_fetch_array($result)){
         $jumlahData = $row["jumlahData"]; 
@@ -80,7 +80,7 @@
             $password_title1 = "Masukkan Password Lama";
             $password_title2 = "Masukkan Password Baru";
 
-            $query = "SELECT * FROM akun_admin where id like '%$nip%';";
+            $query = "select * from akun_admin where id like '%$nip%';";
             $result = mysqli_query($conn,$query);
             while ($row=mysqli_fetch_array($result)){
                 $nama = $row["nama"];
@@ -138,7 +138,7 @@
                 $final_password = $password1;
             }
 
-            $query="INSERT INTO akun_admin set id = '$nip', nama = '$nama', 
+            $query="insert into akun_admin set id = '$nip', nama = '$nama', 
                         posisi = '$posisi', telp = '$telp', email = '$email_akun', 
                         password = '$final_password', login_status = 'logout', foto_profil = '$file_name', 
                         jabatan ='$jabatan', tgl_register = '$tgl_input';";
@@ -146,20 +146,20 @@
             $note = "Tambahkan";
         }else if($editStatus == "yes"){
             $password = "";
-            $query5 = "SELECT password FROM akun_admin where id like '%$nip%';";
+            $query5 = "select password from akun_admin where id like '%$nip%';";
             $result5 = mysqli_query($conn,$query5);
             while ($row=mysqli_fetch_array($result5)){
                 $password = $row["password"]; 
             }
 
             if($password == $password1 && $password1 != "" && $password1 != null && $password2 != "" && $password2 != null){
-                $query="UPDATE akun_admin set nama = '$nama', posisi = '$posisi', telp = '$telp', 
+                $query="update akun_admin set nama = '$nama', posisi = '$posisi', telp = '$telp', 
                         email = '$email_akun', password = '$password2', foto_profil = '$file_name', jabatan ='$jabatan' 
                         where id = '$nip';";
                 $sql_insert1 = mysqli_query($conn,$query);
                 $note = "Diubah dan Pasword Berhasil Diubah";
             }else{
-                $query="UPDATE akun_admin set nama = '$nama', posisi = '$posisi', telp = '$telp', 
+                $query="update akun_admin set nama = '$nama', posisi = '$posisi', telp = '$telp', 
                         email = '$email_akun', foto_profil = '$file_name', jabatan ='$jabatan' 
                         where id = '$nip';";
                 $sql_insert1 = mysqli_query($conn,$query);
@@ -207,12 +207,7 @@
                     </ol>
                 </div>
             </div>
-        </div><!-- /.container-fluid -->
-    </section>
 
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
             <div class="row">
                 <!-- left column -->
                 <div class="col-md-12">
@@ -244,13 +239,8 @@
                 <!--/.col (right) -->
             </div>
             <!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </section>
 
-    <!-- Main content -->
-    <section class="content" <?php echo $hidden_data; ?>>
-        <div class="container-fluid">
-            <div class="row">
+            <div class="row" <?php echo $hidden_data; ?>>
                 <!-- left column -->
                 <div class="col-md-12">
                     <!-- general form elements -->
@@ -343,8 +333,8 @@
                                         <div class="form-group">
                                             <label for="exampleInputPassword1">Foto Profil</label>
                                             <br />
-                                            <img src="images/<?php if($foto_profil != ""){echo $foto_profil;}else{echo 'guest.png';}  ?>" class="rounded float-left"
-                                                alt="..." style="max-width: 400px;">
+                                            <img src="images/<?php if($foto_profil != ""){echo $foto_profil;}else{echo 'guest.png';}  ?>"
+                                                class="rounded float-left" alt="..." style="max-width: 400px;">
                                             <br />
                                         </div>
                                     </div>
@@ -363,147 +353,76 @@
                                 <button type="submit" class="btn btn-primary" name="btnData"
                                     <?php echo $hidden_input_button; ?>>Simpan</button>
                         </form>
-                        <form action="akun_form.php" method="post" merk="frm" enctype="multipart/form-data"
-                            class="form-horizontal">
-                            <input type="hidden" name="nip" class="form-control" value="<?php echo $nip; ?>">
-                            <button type="submit" class="btn btn-primary" name="btnEdit"
-                                <?php echo $hidden_edit_button; ?>>Ubah</button>
-                        </form>
+                                <form action="akun_form.php" method="post" merk="frm" enctype="multipart/form-data"
+                                    class="form-horizontal">
+                                    <input type="hidden" name="nip" class="form-control" value="<?php echo $nip; ?>">
+                                    <button type="submit" class="btn btn-primary" name="btnEdit"
+                                        <?php echo $hidden_edit_button; ?>>Ubah</button>
+                                </form>
+                            </div>
                     </div>
+                    <!-- /.card -->
                 </div>
-                <!-- /.card -->
+                <!--/.col (right) -->
             </div>
-            <!--/.col (right) -->
-        </div>
-        <!-- /.row -->
-</div><!-- /.container-fluid -->
-</section>
-<!-- /.content -->
+            <!-- /.row -->
 
-<?php 
-    $quei = "SELECT * FROM data_barang_npd d, akun_admin a WHERE d.`petugas_pemeriksa` = a.`id` and a.`id` = '$nip'; ";
-    $hasil = mysqli_query($conn,$quei);
-?>
-
-<section class="content" <?php echo $hidden_foto; ?>>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">List pemeriksaan barang NPD Oleh <?php echo $nama; ?></h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body" style="overflow-x: scroll;">
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Pemerikasaan</th>
-                                    <th>Nomer CN</th>
-                                    <th>Nama Penerima</th>
-                                    <th>Alamat Penerima</th>
-                                    <th>Alamat Pengirim</th>
-                                    <th>Kategori Barang</th>
-                                    <th width="50px"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php 
-                        while ($row1=mysqli_fetch_array($hasil)){
-                        ?>
-                                <tr>
-                                    <td><?php echo $row1["tgl_pengecekan_barang"]; ?></td>
-                                    <td><?php echo $row1["no_cn"]; ?></td>
-                                    <td><?php echo $row1["nama_penerima"]; ?></td>
-                                    <td><?php echo $row1["alamat_penerima"]; ?></td>
-                                    <td><?php echo $row1["alamat_pengirim"]; ?></td>
-                                    <td><?php echo $row1["kategori_barang"]; ?></td>
-                                    <td>
-                                        <a href="barang_form.php?noTracking=<?php echo $row1["no_cn"];?>"
-                                            class="btn btn-primary btn-sm" role="button" aria-pressed="true">
-                                            <i class='fas fa-book-open fa-1x'> </i>
-                                        </a>
-                                        <a href="delete_konfirmasi.php?no_cn=<?php echo $row1["no_cn"];?>&act=<?php echo $act;?>"
-                                            class="btn btn-primary btn-sm" role="button" aria-pressed="true">
-                                            <i class='fa fa-trash-o fa-1x'> </i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <?php } ?>
-
-                                </tfoot>
-                        </table>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
-            </div>
-            <!-- /.col -->
-        </div>
-        <!-- /.row -->
-    </div>
-</section>
-
-<?php
-    $que = "SELECT * FROM penerima_npd d, akun_admin a WHERE d.`petugas_pemeriksa` = a.`id` and a.`id` = '$nip';";
-$result1 = mysqli_query($conn,$que);
-?>
-
-<section class="content" <?php echo $hidden_foto; ?>>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">List Memproses Konfirmasi Penerima NPD Oleh <?php echo $nama; ?></h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body" style="overflow-x: scroll;">
-                        <table id="example3" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Tanggal Input</th>
-                                    <th>Nomer CN</th>
-                                    <th>Nama Penerima</th>
-                                    <th>Nomer HP</th>
-                                    <th>Total invoice</th>
-                                    <th width="50px"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php 
-                                    while ($row1=mysqli_fetch_array($result1)){
+            <?php
+                $que = "select d.*, p.nama from data_barang_faktur d, penerima p, akun_admin a where d.nik = p.nik and d.`petugas_pemeriksa` = a.`id` and a.`id` = '$nip' order by d.tgl_input desc, p.nama asc;";
+                $result1 = mysqli_query($conn,$que);
+            ?>
+            <div class="row" <?php echo $hidden_foto; ?>>
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">List Memproses Konfirmasi Penerima NPD Oleh <?php echo $nama; ?></h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body" style="overflow-x: scroll;">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Tanggal Input</th>
+                                        <th>Nama Penerima</th>
+                                        <th>Nomer CN</th>
+                                        <th>Keterangan</th>
+                                        <th>Total Harga Barang</th>
+                                        <th width="50px"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                  while ($row1=mysqli_fetch_array($result1)){
                                 ?>
-                                <tr>
-                                    <td><?php echo $row1["tgl_input"]; ?></td>
-                                    <td><?php echo $row1["no_cn"]; ?></td>
-                                    <td><?php echo $row1["nama_penerima"]; ?></td>
-                                    <td><?php echo $row1["no_hp"]; ?></td>
-                                    <td><?php echo $row1["total_invoice"]; ?></td>
-                                    <td>
-                                        <a href="konfirmasi_form.php?noTracking=<?php echo $row1["no_cn"];?>"
-                                            class="btn btn-primary btn-sm" role="button" aria-pressed="true">
-                                            <i class='fas fa-book-open fa-1x'> </i>
-                                        </a>
-                                        <a href="delete_konfirmasi.php?no_cn=<?php echo $row1["no_cn"];?>&act=<?php echo $act;?>"
-                                            class="btn btn-primary btn-sm" role="button" aria-pressed="true">
-                                            <i class='fa fa-trash-o fa-1x'> </i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <?php } ?>
-                                </tfoot>
-                        </table>
+                                    <tr>
+                                        <td><?php echo $row1["tgl_input"]; ?></td>
+                                        <td><a href="konfirmasi_form.php?noTracking=<?php echo $row1["nik"];?>"
+                                                class="text-dark" role="button" aria-pressed="true">
+                                                <?php echo $row1["nama"]; ?> </a></td>
+                                        <td><?php echo $row1["no_cn"]; ?></td>
+                                        <td><?php echo $row1["keterangan"]; ?></td>
+                                        <td><?php echo $row1["total_invoice"]; ?></td>
+                                        <td>
+                                            <a href="konfirmasi_form.php?noTracking=<?php echo $row1["no_cn"];?>"
+                                                class="btn btn-primary btn-sm" role="button" aria-pressed="true">
+                                                <i class='fas fa-book-open fa-1x'> </i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <?php } ?>
+                                    </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card-body -->
+                    <!-- /.card -->
                 </div>
-                <!-- /.card -->
+                <!-- /.col -->
             </div>
-            <!-- /.col -->
+            <!-- /.row -->
         </div>
-        <!-- /.row -->
-    </div>
-</section>
+    </section>
 
 </div>
 <!-- /.content-wrapper -->

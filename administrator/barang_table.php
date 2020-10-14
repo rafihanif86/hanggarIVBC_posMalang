@@ -13,26 +13,26 @@
     if($act == "belum_diproses"){
       $judul = "Belum Diproses";
       $hidden_status="hidden";
-      $quei = "SELECT d.`tgl_pengecekan_barang`, d.`no_cn`, d.`petugas_pemeriksa`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang`, p.`total_invoice`, p.`proses` 
-                   FROM data_barang_npd d, penerima_npd p WHERE d.`no_cn` = p.`no_cn` AND p.`proses` = 'belum_diproses' ORDER BY d.`tgl_pengecekan_barang` ASC, d.`no_cn` ASC;";
+      $quei = "select d.`tgl_pengecekan_barang`, d.`no_cn`, d.`petugas_pemeriksa`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang`, p.`total_invoice`, p.`proses` 
+                   from data_barang_npd d, penerima_npd p where d.`no_cn` = p.`no_cn` and p.`proses` = 'belum_diproses' order by d.`tgl_pengecekan_barang` asc, d.`no_cn` asc;";
     }else if($act == "telah_diproses"){
       $judul = "Telah Diproses";
       $hidden_status="hidden";
-      $quei = "SELECT d.`tgl_pengecekan_barang`, d.`no_cn`, d.`petugas_pemeriksa`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang`, p.`total_invoice`, p.`proses`
-                   FROM data_barang_npd d, penerima_npd p WHERE d.`no_cn` = p.`no_cn` AND p.`proses` = 'telah_diproses' ORDER BY d.`tgl_pengecekan_barang` ASC, d.`no_cn` ASC;";
+      $quei = "select d.`tgl_pengecekan_barang`, d.`no_cn`, d.`petugas_pemeriksa`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang`, p.`total_invoice`, p.`proses`
+                   from data_barang_npd d, penerima_npd p where d.`no_cn` = p.`no_cn` and p.`proses` = 'telah_diproses' order by d.`tgl_pengecekan_barang` asc, d.`no_cn` asc;";
     }else if($act == "telah_konfirmasi"){
       $judul = "Telah Konfirmasi";
       $hidden_status="hidden";
-      $quei = "SELECT d.`tgl_pengecekan_barang`, d.`no_cn`, d.`petugas_pemeriksa`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang`, p.`total_invoice`, p.`proses` FROM data_barang_npd d, penerima_npd p WHERE d.`no_cn` = p.`no_cn` ORDER BY d.`tgl_pengecekan_barang` DESC, d.`no_cn` ASC;";
+      $quei = "select d.`tgl_pengecekan_barang`, d.`no_cn`, d.`petugas_pemeriksa`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang`, p.`total_invoice`, p.`proses` from data_barang_npd d, penerima_npd p where d.`no_cn` = p.`no_cn` order by d.`tgl_pengecekan_barang` desc, d.`no_cn` asc;";
     }else if($act == "belum_konfirmasi"){
       $judul = "Belum Konfirmasi";
       $hidden_status="hidden";
-      $quei = "SELECT d.`tgl_pengecekan_barang`, d.`no_cn`, d.`petugas_pemeriksa`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang` FROM data_barang_npd d LEFT OUTER JOIN penerima_npd p on d.`no_cn` = p.`no_cn` where p.`no_cn` IS NULL ORDER BY d.`tgl_pengecekan_barang` DESC, d.`no_cn` ASC;";
+      $quei = "select d.`tgl_pengecekan_barang`, d.`no_cn`, d.`petugas_pemeriksa`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang` from data_barang_npd d left outer join penerima_npd p on d.`no_cn` = p.`no_cn` where p.`no_cn` IS null order by d.`tgl_pengecekan_barang` desc, d.`no_cn` asc;";
     }
   }else{
     $judul = "Seluruh Barang";
     $hidden_status="";
-    $quei = "SELECT d.`tgl_pengecekan_barang`, d.`no_cn`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang`, d.`petugas_pemeriksa`, p.`total_invoice`, p.`proses` FROM data_barang_npd d LEFT JOIN penerima_npd p ON d.`no_cn` = p.`no_cn` ORDER BY d.`tgl_pengecekan_barang` DESC, d.`no_cn` ASC; ";
+    $quei = "select d.`tgl_pengecekan_barang`, d.`no_cn`, d.`nama_penerima`, d.`alamat_penerima`, d.`alamat_pengirim`, d.`kategori_barang`, d.`petugas_pemeriksa`, p.`total_invoice`, p.`proses` from data_barang_npd d left join penerima_npd p on d.`no_cn` = p.`no_cn` order by d.`tgl_pengecekan_barang` desc, d.`no_cn` asc; ";
   }
   $hasil = mysqli_query($conn,$quei);
   include('header.php');
@@ -105,7 +105,7 @@
                       <td><?php echo $row1["no_cn"]; ?></td>
                       <td><?php 
                         $nip_pemeriksa = $row1["petugas_pemeriksa"];
-                        $que11 = "SELECT * FROM akun_admin WHERE id = '$nip_pemeriksa';";
+                        $que11 = "select * from akun_admin where id = '$nip_pemeriksa';";
                         $res11=mysqli_query($conn,$que11);
                         while ($row2=mysqli_fetch_array($res11)){
                           echo $row2["nama"];
