@@ -49,7 +49,7 @@
     <div class="login-box" >
         <div class="login-logo">
             <img src="gambar/Logo_BC.png" alt="Hanggar POS BC Malang" class="rounded mx-auto d-block" alt="..."
-                style="width:40%; height:20%">
+                style="width:50%; height:20%">
             <a href="#"><b>Konfirmasi Barang </b><br />
                 <h3>Hanggar POS BC Malang</h3>
             </a>

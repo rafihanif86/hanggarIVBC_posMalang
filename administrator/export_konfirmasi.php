@@ -74,14 +74,14 @@
 <body>
     <?php
         header("Content-type: application/vnd-ms-excel");
-        header("Content-Disposition: attachment; filename=data_konfirmasiNPD_$tgl_hari_ini.xls");
+        header("Content-Disposition: attachment; filename=Laporan_konfirmasiBarangImpor_$tgl_hari_ini.xls");
     ?>
 
-    <h3>Data Konfirmasi Barang NPD
+    <h3>Data Konfirmasi Barang Impor
         <?php echo " | ".$judul; if(($tgl_awal and $tgl_akhir) != ""){echo "Tanggal : ".$tgl_awal." s/d ".$tgl_akhir;}?>
     </h3>
 
-    <b>Data peminjaman:</b>
+    <b>Data Konfirmasi:</b>
     <table style="border: 1">
         <table class="table table-striped table-bordered" style="zoom: 90%;">
             <thead>
@@ -90,11 +90,14 @@
                     <th widht="60px">Tanggal</th>
                     <th>Nomor CN</th>
                     <th>Nama Penerima</th>
+                    <th>NIK</th>
                     <th>Nomor Telepon</th>
+                    <th>Email</th>
                     <th>Nomor NPWP</th>
                     <th>Keterangan Barang</th>
                     <th>Total Harga Barang</th>
-                    <th width="80px"><?php if($hidden_status == "hidden"){echo "Petugas";}else{echo "Status";}?></th>
+                    <th>Status</th>
+                    <th>Petugas</th>
                     <th>Tanggal Diproses</th>
                 </tr>
             </thead>
@@ -110,25 +113,35 @@
                     <td><?php echo $row2["no_cn"]; ?></td>
                     <td><?php echo $row2["nama"]; ?></td>
                     <td><?php echo $row2["no_hp"]; ?></td>
+                    <td><?php echo $row2["email"]; ?></td>
                     <td><?php echo $row2["no_npwp"]; ?></td>
                     <td><?php echo $row2["keterangan"]; ?></td>
                     <td><?php echo $row2["total_invoice"]; ?></td>
-                    <td><?php 
-                            if ($row2["proses"] == "belum_diproses" && $hidden_status == "hidden"){
-                                echo "<i class='fas fa-spinner fa-1x'> </i>";
-                            }else if ($row2["proses"] == "belum_diproses" && $hidden_status == "hidden"){
-                                echo "<i class='fas fa-check fa-1x'> </i>";
-                            } 
-                            if($hidden_petugas == ""){
+                    <td>
+                        <?php 
+                            if($row2["proses"] == "belum_diproses"){
+                                echo "Belum diproses";
+                            }else if($row2["proses"] == "telah_diproses"){
+                                echo "Telah diproses";
+                            }
+                        ?>
+                    </td>
+                    <td>
+                        <?php 
+                            if($row2["petugas_pemeriksa"] != ""){
                                 $nama_petugas = "";
                                 $id_petugas = $row2["petugas_pemeriksa"];
-                                $quer4 = "SELECT * FROM akun_admin where id = '$id_petugas';";
+                                $quer4 = "select * from akun_admin where id = '$id_petugas';";
                                 $resu4=mysqli_query($conn,$quer4);
                                 while ($row4=mysqli_fetch_array($resu4)){
-                                    echo " ".$row4["nama"];
+                                    $nama_petugas = $row4["nama"];
                                 }
+                                echo $nama_petugas;
+                            }else{
+                                echo "-";
                             }
-                        ?></td>
+                        ?>
+                    </td>
                     <td><?php echo $row2["tgl_proses"]; ?></td>
                 </tr>
                 <?php }?>

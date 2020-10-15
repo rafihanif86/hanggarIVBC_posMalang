@@ -14,10 +14,7 @@
     $tgl_akhir = $_POST["tgl_akhir"];
     $act = $_POST["action"];
     if(isset($_POST["cetakxls"])){
-        echo "<script> window.open('export_konfirmasi.php?status=$act&tgl_awal=$tgl_awal&tgl_akhir=$tgl_akhir', '_blank');</script>";
-    }
-    if(isset($_POST["print"])){
-        echo "<script> var win = window.open('konfirmasi_report_date.php?status=$act&tgl_awal=$tgl_awal&tgl_akhir=$tgl_akhir', '_blank'); win.focus();</script>";
+        echo "<script> window.open('export_penerima.php?tgl_awal=$tgl_awal&tgl_akhir=$tgl_akhir', '_blank');</script>";
     }
   }
 
@@ -52,16 +49,8 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">List Data Penerima</h3>
-                  <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal"
-                      data-target="#exampleModalCenter" 
-                      <?php 
-                        if($_SESSION['status'] == "checker"){
-                          if($act == "belum_diproses" || $act == "seluruh"){
-                            echo "hidden";
-                          }
-                        }
-                      ?>
-                  ><i class="fas fa-print fa-1x"></i> Laporan </button>
+                  <a href="" class="btn btn-primary btn-sm float-right" data-toggle="modal"
+                      data-target="#exampleModalCenter" ><i class="fas fa-print fa-1x"></i> Laporan </button>
                 </a>
               </div>
               <!-- /.card-header -->
@@ -166,8 +155,6 @@
                     <input type="hidden" name="action" value="<?php echo $act;?>">
                     <button type="submit" class="btn btn-success" name="cetakxls"><i
                             class='fa fa-file-download fa-1x'></i> Download file.xls</button>
-                    <button type="submit" class="btn btn-primary" name="print"><i
-                            class='fa fa-print fa-1x'></i> Print</button>
                 </div>
             </form>
         </div>

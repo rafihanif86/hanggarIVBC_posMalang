@@ -677,7 +677,7 @@
                                                         style="background-color: rgba(69, 59, 59, 0.5)">
                                                         <p class="text-white"><?php echo $row1["nama_foto"]; ?></p>
                                                         <?php if($disabeled_data2 !="disabled"){?>
-                                                            <a href="delete_foto_invoice.php?no_cn=<?php echo $no_tracking;?>" class="btn btn-primary btn-sm"><i class='fa fa-trash-o fa-1x'> </i></a>
+                                                            <a href="delete_foto_invoice.php?n=<?php echo base64_encode($no_tracking);?>&i=<?php echo base64_encode($row1["id"]);?>" class="btn btn-primary btn-sm"><i class='fa fa-trash-o fa-1x'> </i></a>
                                                         <?php } ?>
                                                     </div>
                                                 </div>
