@@ -298,45 +298,7 @@ include 'header.php';
                     </div>
                 </div>
             </div>
-            <div class="container">
-                <div class="row">
-                    <div class=col-lg-12 style="background-color: white;  width: auto; border: 2px solid black; padding: 50px; margin: 20px;">
-                        <div class="story_heading">
-                            <h3>kalkulator kurs mata uang</h3>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-11 offset-lg-1">
-                                <div class="story_info">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="kalkulator">
-                                                <h2 class="judul">KALKULATOR</h2>
-                                                <!-- <a class="brand" href="https://www.malasngoding.com">www.malasngoding.com</a> -->
-                                                <form method="post" action="homepage.php">
-                                                    <input type="text" name="bil1" class="bil" autocomplete="off" placeholder="Masukkan kurs Mata Uang asing to IDR">
-                                                    <input type="text" name="bil2" class="bil" autocomplete="off" placeholder="Masukkan Jumlah mata uang">
-                                                    <select class="opt" name="operasi">
-                                                        <option value="kali">x</option>
-                                                        <option value="tambah">+</option>
-                                                        <option value="kurang">-</option>
-                                                        <option value="bagi">/</option>
-                                                    </select>
-                                                    <input type="submit" name="hitung" value="Hitung" class="tombol">
-                                                </form>
-                                                <?php if (isset($_POST['hitung'])) { ?>
-                                                    <input type="text" value="<?php echo $hasil; ?>" class="bil">
-                                                <?php } else { ?>
-                                                    <input type="text" value="0" class="bil">
-                                                <?php } ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </div>
 </body>

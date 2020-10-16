@@ -9,13 +9,18 @@
                                     <img src="img/header/logo_BC_POS_putih.png" style="width: 290px">
                                 </a>
                             </div>
+                            <?php 
+                                $noPottong = substr($no_hp,1);
+                            ?>
                             <p>
                                 KANTOR KPPBC TMC MALANG <br/>
                                 Hanggar Pabean dan Cukai VI <br/>
                                 Kantor Pos Malang <br/>
-                                Alamat: Jl. Merdeka Selatan No.5, Kauman, Kec. Klojen, Kota Malang, Jawa Timur 65119 <br/>
+                                Alamat  : Jl. Merdeka Selatan No.5, Kauman, Kec. Klojen, Kota Malang, Jawa Timur 65119 <br/>
                                 Website : <a href="www.beacukaimalang.com">www.beacukaimalang.com</a>  <br/>
-                                Email : informasi_kppbcmalang@ymail.com | kppbcmalang@yahoo.co.id
+                                Email   : informasi_kppbcmalang@ymail.com | kppbcmalang@yahoo.co.id<br/>
+                                Telepon : <a href="https://api.whatsapp.com/send?phone=<?php echo "+62" .$noPottong; ?>&text=Halo"target="_blank"><?php echo $no_hp;?></a>
+
                             </p>
                             <div class="socail_links">
                                 <ul>
@@ -69,7 +74,7 @@
                     <div class="col-md-12">
                         <p class="copy_right text-center">
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            Copyright@ Bea Cukai Malang
+                            Copyright@ Konfirmasi Barang Impor By JTI POLINEMA | 
                             <a href="../administrator/login_page.php">Login</a>
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </p>

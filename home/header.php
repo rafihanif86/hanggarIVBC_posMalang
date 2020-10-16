@@ -2,6 +2,7 @@
     include('connection.php');
     session_start();
     $_SESSION['redirect_to'] = "";
+    $no_hp = "081916983958";
 ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -9,7 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Hanggar IV BC | Pos Malang</title>
+    <title>BEA CUKAI | Kantor Pos Malang</title>
     <link rel="shortcut icon" href="../administrator/gambar/logo_BC.png">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,68 +41,23 @@
 
 <body>
     <header>
-        <div class="header-area ">
-            <div id="sticky-header" class="main-header-area">
-                <div class="container-fluid">
-                    <div class="header_bottom_border">
-                        <div class="row align-items-center">
-                            <div class="col-xl-3 col-lg-3">
-                                <div class="logo">
-                                    <a href="#"><img src="img/header/logo_BC_POS.png" style="width: 290px;"></a><br />
-
-                                </div>
-                            </div>
-                            <div class="col-xl-5 col-lg-5">
-                                <nav class="navbar navbar-expand-lg navbar-light">
-                                    <div class="collapse navbar-collapse" id="navbarNav">
-                                        <ul class="navbar-nav" id="navigation">
-                                            <li class="nav-item <?php if($page == "beranda"){echo "active";}?>">
-                                                <a class="nav-link" href="homepage.php">Beranda</a>
-                                            </li>
-                                            <li class="nav-item <?php if($page == "tatacara"){echo "active";}?>">
-                                                <a class="nav-link" href="about.php">Tata Cara</a>
-                                            </li>
-                                            <li class="nav-item <?php if($page == "konfirmasi"){echo "active";}?>">
-                                                <a class="nav-link" href="konfirmasi.php">Konfirmasi</a>
-                                            </li>
-                                            <li class="nav-item <?php if($page == "tentang"){echo "active";}?>">
-                                                <a class="nav-link" href="contact.php">Tentang</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </nav>
-                            </div>
-                            <div class="col-xl-4 col-lg-4 d-none d-lg-block">
-                                <div class="social_wrap d-flex align-items-center justify-content-end">
-                                    <div class="number">
-                                        <?php 
-                                            $no_hp = "081916983958";
-                                            $noPottong = substr($no_hp,1);
-                                        ?>
-                                        <p>
-                                            <a href="https://api.whatsapp.com/send?phone=<?php echo "+62" .$noPottong; ?>&text=Halo"
-                                                target="_blank">
-                                                <i class="fa fa-phone"></i><?php echo $no_hp;?>
-                                            </a>
-                                        </p>
-                                    </div>
-                                    <div class="social_links d-none d-xl-block">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- <div class="seach_icon">
-                                <a data-toggle="modal" data-target="#exampleModalCenter" href="#">
-                                    <i class="fa fa-search"></i>
-                                </a>
-                            </div> -->
-                            <!-- <div class="col-12">
-                                <div class="mobile_menu d-block d-lg-none"></div>
-                            </div> -->
-                        </div>
-                    </div>
-
-                </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <div class="container"> 
+            <a class="navbar-brand" href="#"><img src="img/header/logo_BC_POS.png" style="width: 290px;"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link <?php if($page == "beranda"){echo "active";}?>" href="homepage.php">Beranda</a>
+                <a class="nav-item nav-link <?php if($page == "tatacara"){echo "active";}?>" href="about.php">Tata Cara</a>
+                <a class="nav-item nav-link <?php if($page == "konfirmasi"){echo "active";}?>" href="konfirmasi.php">Konfirmasi</a>
+                <a class="nav-item nav-link <?php if($page == "kalkulator"){echo "active";}?>" href="kalkulator.php">Kalkulator Pajak</a>
+                <a class="nav-item nav-link <?php if($page == "tentang"){echo "active";}?>" href="contact.php">Tentang</a>
             </div>
-        </div>
+            </div>
+            </div>
+        </nav>
     </header>
+    <br/>
     <!-- header-end -->

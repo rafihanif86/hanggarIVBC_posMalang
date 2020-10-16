@@ -520,7 +520,7 @@
                                             </div>
                                             <small class="help-block form-text">Masukkan total nominal harga barang
                                                 sesuai dengan invoice dijumlah dengan biaya pengiriman, Dalam satuan
-                                                Rupiah (Rp)</small>
+                                                Rupiah (Rp). Total invoice = Harga Barang + Biaya Angkut + Ansuransi</small>
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputPassword1">Keterangan dan Deskripsi Barang

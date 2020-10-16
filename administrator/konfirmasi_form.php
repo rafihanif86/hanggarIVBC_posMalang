@@ -343,7 +343,7 @@
             $sapa = "Selamat Malam ".$nama_penerima."/n";
         }
 
-        $message = $sapa."Barang impor anda dengan nomor tracking ".$$no_tracking." telah diproses perpajakan oleh petugas kami. Anda bisa mengambil barang import anda diloket kantor pos dengan membawa ktp anda./n Terima kasih.";
+        $message = $sapa."/n Barang impor anda dengan nomor tracking ".$$no_tracking." telah diproses perpajakan oleh petugas kami. Anda bisa mengambil barang import anda di loket kantor pos dengan membawa ktp anda./n Terima kasih.";
         $subject = "Bea Cukai Kantor Pos Malang";
         send_mail($nama_penerima,$email_penerima,$subject,$message);
         
